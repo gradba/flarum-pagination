@@ -33,11 +33,20 @@ export default class PostStreamPaginated extends PostStream {
       // Drop the core "Load more" button — it has no place in paginated mode.
       vdom.children = vdom.children.filter((child: any) => !(child && child.key === 'loadMore'));
 
-      vdom.children.push(
+      const paginator = (
         <div className="PostStream-pagination" key="gradba-paginator">
           <PostPaginator stream={this.stream} perPage={this.postsPerPage()} />
         </div>
       );
+
+      // Place the pager right after the posts — i.e. just before the reply
+      // placeholder when it is shown (last page), otherwise at the end.
+      const replyIndex = vdom.children.findIndex((child: any) => child && child.key === 'reply');
+      if (replyIndex >= 0) {
+        vdom.children.splice(replyIndex, 0, paginator);
+      } else {
+        vdom.children.push(paginator);
+      }
     }
 
     return vdom;

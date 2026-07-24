@@ -40,7 +40,7 @@ export default class PostPaginator extends Component<PostPaginatorAttrs> {
           {this.pageList(current, pageCount).map((page) => (
             <li>
               <Button
-                className={'Button Button--link GradbaPostPaginator-page' + (page === current ? ' Button--active' : '')}
+                className={'Button GradbaPostPaginator-page' + (page === current ? ' GradbaPostPaginator-page--active' : '')}
                 onclick={() => this.goto(page)}
               >
                 {page}
@@ -56,7 +56,7 @@ export default class PostPaginator extends Component<PostPaginatorAttrs> {
 
   navButton(icon: string, page: number, disabled: boolean, key: string) {
     return Button.component({
-      className: 'Button Button--icon Button--link',
+      className: 'Button Button--icon GradbaPostPaginator-nav',
       icon,
       disabled,
       title: this.transText(key),

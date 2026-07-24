@@ -43,9 +43,15 @@
 }
 
 // --- Post-stream pager (inside a discussion) ---
+.PostStream-pagination {
+  border-top: 1px solid var(--control-bg);
+  margin-top: 10px;
+}
+
 .GradbaPostPaginator {
-  margin: 16px 0;
-  text-align: center;
+  display: flex;
+  justify-content: center;
+  padding: 16px 0;
 
   &-items {
     list-style: none;
@@ -55,12 +61,38 @@
     flex-wrap: wrap;
     align-items: center;
     justify-content: center;
-    gap: 4px;
+    gap: 6px;
   }
 
-  &-page.Button--active {
+  // All pager buttons share a consistent pill look.
+  .Button {
+    min-width: 40px;
+    height: 40px;
+    padding: 0 14px;
+    border-radius: var(--border-radius);
+    background: var(--control-bg);
+    color: var(--control-color);
+    font-weight: 600;
+    line-height: 1;
+    box-shadow: none;
+    transition: background 0.1s ease, color 0.1s ease, filter 0.1s ease;
+
+    &:not(:disabled):hover {
+      filter: brightness(0.94);
+    }
+
+    &:disabled {
+      opacity: 0.45;
+      cursor: default;
+    }
+  }
+
+  // The current page stands out with the theme's primary colour.
+  &-page--active,
+  &-page--active:hover {
     background: var(--primary-color);
     color: #fff;
+    filter: none;
   }
 }
 
