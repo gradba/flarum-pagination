@@ -8,6 +8,7 @@ gradba-pagination:
 
       postsPerPage: Posts per page
       postsPerPage-Help: How many posts to show on each page inside a discussion.
+      postStreamPosition: Post pager position
 
       perPage: Discussions per page
       perPage-Help: How many discussions to show on each page of the list (pagination mode).
@@ -17,15 +18,15 @@ gradba-pagination:
       paginationOnLoading-Help: When on, the discussion list uses numbered pages; when off, it uses a "load more" button.
       cacheDiscussions: Cache visited pages
       cacheDiscussions-Help: Keep already-loaded pages in memory so revisiting them is instant.
-      paginationPosition: Pager position
+      paginationPosition: Discussion list pager position
       perIndexInit: Discussions on first load
       perIndexInit-Help: How many discussions to load initially in load-more mode.
       perLoadMore: Discussions per "load more"
       perLoadMore-Help: How many discussions each "load more" click adds in load-more mode.
       position:
-        above: Above the list
-        under: Under the list
-        both: Above and under
+        above: Above
+        under: Below
+        both: Both (top and bottom)
 
   forum:
     list:

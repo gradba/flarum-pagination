@@ -15,7 +15,13 @@ declare const m: any;
  * viewport to the top of the page once the posts have loaded and the DOM has
  * settled. No forced sync-redraw fighting the browser, no stale scroll offset.
  */
-export default function goToPage(stream: PostStreamState, page: number, perPage: number, noAnimation = false): Promise<void> {
+export default function goToPage(
+  stream: PostStreamState,
+  page: number,
+  perPage: number,
+  noAnimation = false,
+  scrollIndex: number | null = null
+): Promise<void> {
   const s = stream as any;
 
   const total = s.count();
@@ -25,11 +31,16 @@ export default function goToPage(stream: PostStreamState, page: number, perPage:
   const start = (target - 1) * perPage;
   const end = start + perPage;
 
+  // The loaded range is always the exact page; `scrollIndex` (used by the initial
+  // deep-link snap) only changes which post inside that page we scroll to —
+  // otherwise we anchor to the page's first post.
+  const anchor = scrollIndex != null ? scrollIndex : start;
+
   s.paused = true;
   s.needsScroll = true;
-  s.targetPost = { index: start };
+  s.targetPost = { index: anchor };
   s.animateScroll = !noAnimation;
-  s.index = start;
+  s.index = anchor;
 
   const promise = s.loadRange(start, end).then((posts: any[]) => {
     s.show(posts);

@@ -51,6 +51,7 @@ return [
         ->serializeToForum('gradba-pagination.perIndexInit', 'gradba-pagination.perIndexInit', 'intVal')
         ->serializeToForum('gradba-pagination.perLoadMore', 'gradba-pagination.perLoadMore', 'intVal')
         ->serializeToForum('gradba-pagination.paginationPosition', 'gradba-pagination.paginationPosition')
+        ->serializeToForum('gradba-pagination.postStreamPosition', 'gradba-pagination.postStreamPosition')
         ->serializeToForum('gradba-pagination.postsPerPage', 'gradba-pagination.postsPerPage', 'intVal')
         ->default('gradba-pagination.enableDiscussionList', true)
         ->default('gradba-pagination.enablePostStream', true)
@@ -61,6 +62,7 @@ return [
         ->default('gradba-pagination.perIndexInit', 20)
         ->default('gradba-pagination.perLoadMore', 20)
         ->default('gradba-pagination.paginationPosition', 'under')
+        ->default('gradba-pagination.postStreamPosition', 'both')
         ->default('gradba-pagination.postsPerPage', 20),
 
     // --- Per-user preference (discussion list) -----------------------------

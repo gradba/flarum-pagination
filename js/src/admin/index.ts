@@ -29,6 +29,17 @@ app.initializers.add('gradba-pagination', () => {
       min: 1,
       max: 50,
     })
+    .registerSetting({
+      label: t('postStreamPosition'),
+      setting: 'gradba-pagination.postStreamPosition',
+      type: 'select',
+      options: {
+        above: t('position.above'),
+        under: t('position.under'),
+        both: t('position.both'),
+      },
+      default: 'both',
+    })
 
     // --- Discussion list ---------------------------------------------------
     .registerSetting({

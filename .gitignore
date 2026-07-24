@@ -1,5 +1,6 @@
 /vendor
 composer.lock
+/weblate-mcp
 js/node_modules
 js/dist-typings
 .DS_Store

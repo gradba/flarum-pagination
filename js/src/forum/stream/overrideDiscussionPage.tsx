@@ -2,6 +2,7 @@ import app from 'flarum/forum/app';
 import { extend, override } from 'flarum/common/extend';
 import DiscussionPage from 'flarum/forum/components/DiscussionPage';
 import CommentPost from 'flarum/forum/components/CommentPost';
+import PostStreamState from 'flarum/forum/states/PostStreamState';
 import ItemList from 'flarum/common/utils/ItemList';
 import type Mithril from 'mithril';
 
@@ -9,6 +10,10 @@ import PostStreamPaginated from './PostStreamPaginated';
 
 function enabled(): boolean {
   return !!app.forum.attribute('gradba-pagination.enablePostStream');
+}
+
+function perPage(): number {
+  return parseInt(app.forum.attribute('gradba-pagination.postsPerPage')) || 20;
 }
 
 /**
@@ -22,6 +27,17 @@ function enabled(): boolean {
  * "jump to post" links keep working without any serializer changes.
  */
 export default function overrideDiscussionPage() {
+  // Align core's post-load window with the page size BEFORE core's show creates
+  // the stream, so the initial deep-link load fetches ~one page instead of the
+  // default 20-post window. Safe here (app.forum exists at oninit) — unlike the
+  // app initializer body, which runs before forum data is attached.
+  override(DiscussionPage.prototype, 'oninit', function (this: any, original, vnode) {
+    if (enabled()) {
+      (PostStreamState as any).loadCount = perPage();
+    }
+    return original(vnode);
+  });
+
   // Show the real post number on each comment.
   extend(CommentPost.prototype, 'headerItems', function (this: any, items) {
     if (!enabled()) return;
