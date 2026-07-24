@@ -88,8 +88,10 @@
   }
 
   // The current page stands out with the theme's primary colour.
-  &-page--active,
-  &-page--active:hover {
+  // (Extra .Button qualifier so this beats the `.GradbaPostPaginator .Button`
+  // rule above on specificity.)
+  .Button.GradbaPostPaginator-page--active,
+  .Button.GradbaPostPaginator-page--active:hover {
     background: var(--primary-color);
     color: #fff;
     filter: none;
