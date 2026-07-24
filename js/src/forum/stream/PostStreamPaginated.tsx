@@ -13,7 +13,7 @@ import PostPaginator from './PostPaginator';
  *
  *   - `loadPostsIfNeeded` becomes a no-op, so scrolling within a page never
  *     auto-loads the adjacent page (that's the pager's job now). All other
- *     onscroll work (position tracking) still runs.
+ *     onscroll work (position tracking / read state) still runs.
  *   - `view` appends the pager and strips the stock "Load more" button.
  */
 export default class PostStreamPaginated extends PostStream {
@@ -35,7 +35,7 @@ export default class PostStreamPaginated extends PostStream {
 
       vdom.children.push(
         <div className="PostStream-pagination" key="gradba-paginator">
-          <PostPaginator stream={this.stream} perPage={this.postsPerPage()} onPageChange={this.attrs.onPageChange} />
+          <PostPaginator stream={this.stream} perPage={this.postsPerPage()} />
         </div>
       );
     }

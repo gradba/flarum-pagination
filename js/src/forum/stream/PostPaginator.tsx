@@ -9,7 +9,6 @@ import goToPage from './goToPage';
 export interface PostPaginatorAttrs {
   stream: PostStreamState;
   perPage: number;
-  onPageChange: (page: number) => void;
 }
 
 /**
@@ -78,9 +77,9 @@ export default class PostPaginator extends Component<PostPaginatorAttrs> {
 
     if (target === Math.floor(stream.visibleStart / perPage) + 1) return;
 
-    goToPage(stream, target, perPage).then(() => {
-      this.attrs.onPageChange(target);
-    });
+    // goToPage loads the page and redraws; core's scroll lifecycle then moves
+    // the viewport and calculatePosition() updates the URL to the new top post.
+    goToPage(stream, target, perPage);
   }
 
   /** Sliding window of page numbers around the current page. */

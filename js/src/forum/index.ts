@@ -2,6 +2,7 @@ import app from 'flarum/forum/app';
 import { extend } from 'flarum/common/extend';
 import DiscussionComposer from 'flarum/forum/components/DiscussionComposer';
 import DiscussionControls from 'flarum/forum/utils/DiscussionControls';
+import PostStreamState from 'flarum/forum/states/PostStreamState';
 
 import addUserPreference from './list/addUserPreference';
 import overrideDiscussionListState from './list/overrideDiscussionListState';
@@ -16,6 +17,13 @@ app.initializers.add(
     addUserPreference();
     overrideDiscussionListState();
     overrideDiscussionList();
+
+    // Align core's post-load window with the configured page size so the first
+    // page core loads matches what the paginator expects.
+    if (app.forum.attribute('gradba-pagination.enablePostStream')) {
+      const perPage = parseInt(app.forum.attribute('gradba-pagination.postsPerPage')) || 20;
+      (PostStreamState as any).loadCount = perPage;
+    }
 
     extend(DiscussionControls, 'deleteAction', function (this: any) {
       if (!listEnabled() || !this.usePaginationMode) return;
