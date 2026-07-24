@@ -1,0 +1,77 @@
+// --- Discussion-list pager (ported from FoskyM/flarum-pagination) ---
+.Pagination {
+  margin-right: 10px;
+  margin-bottom: 10px;
+  margin-top: 10px;
+  text-align: center;
+
+  .IndexPage-toolbar-view {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: inline-flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+  }
+
+  button {
+    margin-bottom: 4px;
+    margin-top: 4px;
+  }
+
+  input {
+    margin-left: 16px;
+    margin-bottom: 4px;
+    margin-top: 4px;
+
+    color: var(--button-color);
+    background: var(--button-bg);
+
+    text-align: center;
+    vertical-align: middle;
+    font-weight: bolder;
+
+    outline: none;
+    border: 0;
+
+    border-radius: var(--border-radius);
+    width: 48px;
+    height: 36px;
+  }
+}
+
+// --- Post-stream pager (inside a discussion) ---
+.GradbaPostPaginator {
+  margin: 16px 0;
+  text-align: center;
+
+  &-items {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: inline-flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+  }
+
+  &-page.Button--active {
+    background: var(--primary-color);
+    color: #fff;
+  }
+}
+
+// Real post number badge in the comment header.
+.GradbaPostNumber {
+  color: var(--muted-color);
+  font-size: 12px;
+  font-weight: bold;
+  margin-left: 5px;
+
+  span {
+    opacity: 0.6;
+  }
+}

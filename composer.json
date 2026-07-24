@@ -1,0 +1,46 @@
+{
+    "name": "gradba/flarum-pagination",
+    "description": "Real page-number pagination for Flarum — for both the discussion list and the post stream inside a discussion.",
+    "keywords": ["flarum", "pagination", "discussion", "posts"],
+    "type": "flarum-extension",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Gradba.mk",
+            "role": "Maintainer"
+        },
+        {
+            "name": "FoskyM",
+            "role": "Original author (discussion-list pagination)"
+        },
+        {
+            "name": "daocatt (gtdxyz)",
+            "role": "Original author (post-stream pagination)"
+        }
+    ],
+    "require": {
+        "flarum/core": "^1.8"
+    },
+    "autoload": {
+        "psr-4": {
+            "Gradba\\Pagination\\": "src/"
+        }
+    },
+    "extra": {
+        "flarum-extension": {
+            "title": "Pagination",
+            "category": "feature",
+            "icon": {
+                "name": "fas fa-book-open",
+                "backgroundColor": "#0d9488",
+                "color": "#fff"
+            }
+        }
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true,
+    "support": {
+        "source": "https://github.com/gradba/flarum-pagination",
+        "issues": "https://github.com/gradba/flarum-pagination/issues"
+    }
+}

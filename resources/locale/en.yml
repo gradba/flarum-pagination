@@ -1,0 +1,47 @@
+gradba-pagination:
+  admin:
+    settings:
+      enableDiscussionList: Paginate the discussion list
+      enableDiscussionList-Help: Replace infinite scrolling on the index (the list of discussions) with numbered pages.
+      enablePostStream: Paginate posts inside a discussion
+      enablePostStream-Help: Replace infinite scrolling of the post stream with numbered pages.
+
+      postsPerPage: Posts per page
+      postsPerPage-Help: How many posts to show on each page inside a discussion.
+
+      perPage: Discussions per page
+      perPage-Help: How many discussions to show on each page of the list (pagination mode).
+      canUserPref: Let users choose their own mode
+      canUserPref-Help: Show a switch on each user's settings page to pick pagination or load-more.
+      paginationOnLoading: Use pagination by default
+      paginationOnLoading-Help: When on, the discussion list uses numbered pages; when off, it uses a "load more" button.
+      cacheDiscussions: Cache visited pages
+      cacheDiscussions-Help: Keep already-loaded pages in memory so revisiting them is instant.
+      paginationPosition: Pager position
+      perIndexInit: Discussions on first load
+      perIndexInit-Help: How many discussions to load initially in load-more mode.
+      perLoadMore: Discussions per "load more"
+      perLoadMore-Help: How many discussions each "load more" click adds in load-more mode.
+      position:
+        above: Above the list
+        under: Under the list
+        both: Above and under
+
+  forum:
+    list:
+      first: First
+      previous: Previous
+      next: Next
+      last: Last
+      jump: Jump to page
+    post_stream:
+      aria_label: Post pagination
+      first: First page
+      previous: Previous page
+      next: Next page
+      last: Last page
+    user:
+      settings:
+        head: Pagination
+        userCustom: Use my own pagination setting
+        userPaginationOnLoading: Show discussions as numbered pages
