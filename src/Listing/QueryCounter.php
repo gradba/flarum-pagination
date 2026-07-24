@@ -12,23 +12,25 @@
 
 namespace Gradba\Pagination\Listing;
 
-use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Builder as EloquentBuilder;
+use Illuminate\Database\Query\Builder as QueryBuilder;
 
 class QueryCounter
 {
     /**
      * Count all rows the given (already-filtered) query would return, ignoring
      * any LIMIT/OFFSET/ORDER BY that pagination may have applied.
+     *
+     * Flarum's FilterState::getQuery() hands us a base Query\Builder, while some
+     * callers pass an Eloquent\Builder — accept either.
      */
-    public static function count(Builder $query): int
+    public static function count(QueryBuilder|EloquentBuilder $query): int
     {
-        $base = (clone $query)->toBase();
+        $base = $query instanceof EloquentBuilder ? $query->toBase() : $query;
 
-        // Drop pagination + ordering so the count reflects the whole result set.
-        $base->limit = null;
-        $base->offset = null;
-        $base->orders = null;
-
-        return $base->getCountForPagination();
+        // getCountForPagination() clones the query internally (without
+        // columns/orders/limit/offset), so it does not mutate the caller's
+        // query, and it counts correctly across group-by / distinct / joins.
+        return (int) $base->getCountForPagination();
     }
 }

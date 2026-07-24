@@ -39,14 +39,23 @@ export default function goToPage(stream: PostStreamState, page: number, perPage:
   // (1) Render placeholders for the exact page range straight away.
   s.reset(start, end);
 
-  // (2) Load exactly this page's posts (fetches only what isn't already cached).
-  s.loadPromise = s.loadRange(start, end).then(s.show.bind(s));
-
   // (3) Anchor the scroll to the first post of the page.
   s.needsScroll = true;
   s.targetPost = { index: start };
   s.animateScroll = !noAnimation;
   s.index = start;
+
+  // (2) Load exactly this page's posts (fetches only what isn't already cached),
+  // then redraw so the retained core PostStream re-renders with the new range
+  // AND runs its onupdate -> triggerScroll -> scrollToItem lifecycle against the
+  // now-loaded DOM. Without this trailing redraw the state advances but the
+  // component never repaints (nor scrolls) until the next unrelated redraw.
+  s.loadPromise = s
+    .loadRange(start, end)
+    .then(s.show.bind(s))
+    .then(() => {
+      m.redraw();
+    });
 
   m.redraw();
 

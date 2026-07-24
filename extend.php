@@ -17,27 +17,12 @@ use Flarum\Api\Controller\ListDiscussionsController;
 use Flarum\Discussion\Filter\DiscussionFilterer;
 use Flarum\Discussion\Search\DiscussionSearcher;
 use Flarum\Extend;
-use Flarum\Flags\Api\Serializer\FlagSerializer;
-use Flarum\Flags\Flag;
-use Flarum\Notification\Notification;
-use Flarum\Api\Serializer\NotificationSerializer;
-use Flarum\Settings\SettingsRepositoryInterface;
 use Gradba\Pagination\Listing\AddDiscussionListMeta;
 use Gradba\Pagination\Listing\DiscussionFilterMutator;
 use Gradba\Pagination\Listing\DiscussionSearchMutator;
 use Gradba\Pagination\Middleware\ConvertPostStreamNear;
 use Gradba\Pagination\Middleware\NormalizeListLimit;
 use Gradba\Pagination\Provider\PaginationServiceProvider;
-
-/**
- * Real post number -> page number, using the configured posts-per-page. Used to
- * make mention/flag "jump to post #N" links land on the correct page.
- */
-$toPage = function (int $number): int {
-    $perPage = (int) (resolve(SettingsRepositoryInterface::class)->get('gradba-pagination.postsPerPage') ?: 20);
-
-    return (int) max(1, ceil($number / max(1, $perPage)));
-};
 
 return [
     // --- Frontend assets ---------------------------------------------------
@@ -98,47 +83,9 @@ return [
         ->add(NormalizeListLimit::class)
         ->add(ConvertPostStreamNear::class),
 
-    // --- Jump-link fixups: convert real post numbers to page numbers -------
-    (new Extend\Conditional())
-        ->whenExtensionEnabled('flarum-mentions', [
-            (new Extend\ApiSerializer(NotificationSerializer::class))
-                ->attribute('content', function ($serializer, Notification $notification) use ($toPage) {
-                    if ($notification->type === 'postMentioned'
-                        && is_array($notification->data)
-                        && array_key_exists('replyNumber', $notification->data)
-                    ) {
-                        $data = $notification->data;
-                        $data['replyNumber'] = $toPage((int) $data['replyNumber']);
-
-                        return $data;
-                    }
-
-                    return $notification->data;
-                })
-                ->attribute('subject', function ($serializer, Notification $notification) use ($toPage) {
-                    if ($notification->type === 'userMentioned' && $notification->subject) {
-                        $subject = $notification->subject;
-                        $subject->number = $toPage((int) $subject->number);
-
-                        return $subject;
-                    }
-
-                    return $notification->subject;
-                }),
-        ]),
-
-    (new Extend\Conditional())
-        ->whenExtensionEnabled('flarum-flags', [
-            (new Extend\ApiSerializer(FlagSerializer::class))
-                ->attribute('post', function ($serializer, Flag $flag) use ($toPage) {
-                    if ($flag->post) {
-                        $post = $flag->post;
-                        $post->number = $toPage((int) $post->number);
-
-                        return $post;
-                    }
-
-                    return $flag->post;
-                }),
-        ]),
+    // NOTE: mention/flag "jump to post #N" deep-links are not yet rewritten to
+    // page numbers. The upstream approach (mutating the shared Post/Notification
+    // model inside the serializer) force-loads relations and can break
+    // notification serialization, so it is intentionally omitted here and left
+    // as a follow-up to be done safely on the frontend.
 ];
