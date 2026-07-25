@@ -35,7 +35,7 @@ export default class PostPaginator extends Component<PostPaginatorAttrs> {
     return (
       <nav className="GradbaPostPaginator" aria-label={this.transText('aria_label')}>
         <ul className="GradbaPostPaginator-items">
-          <li>{this.navButton('fas fa-angles-left', 1, current === 1, 'first')}</li>
+          <li>{this.navButton('fas fa-angle-double-left', 1, current === 1, 'first')}</li>
           <li>{this.navButton('fas fa-angle-left', current - 1, current === 1, 'previous')}</li>
           {this.pageList(current, pageCount).map((page) => (
             <li>
@@ -48,7 +48,7 @@ export default class PostPaginator extends Component<PostPaginatorAttrs> {
             </li>
           ))}
           <li>{this.navButton('fas fa-angle-right', current + 1, current === pageCount, 'next')}</li>
-          <li>{this.navButton('fas fa-angles-right', pageCount, current === pageCount, 'last')}</li>
+          <li>{this.navButton('fas fa-angle-double-right', pageCount, current === pageCount, 'last')}</li>
         </ul>
       </nav>
     );

@@ -47,7 +47,7 @@ export default class Toolbar extends Component {
     let state = this.attrs.state;
     return Button.component({
       title: app.translator.trans('gradba-pagination.forum.list.first'),
-      icon: 'fas fa-angles-left',
+      icon: 'fas fa-angle-double-left',
       className: 'Button Button--icon',
       onclick: () => {
         state.ctrl.toPage(1);
@@ -88,7 +88,7 @@ export default class Toolbar extends Component {
     let state = this.attrs.state;
     return Button.component({
       title: app.translator.trans('gradba-pagination.forum.list.last'),
-      icon: 'fas fa-angles-right',
+      icon: 'fas fa-angle-double-right',
       className: 'Button Button--icon',
       onclick: () => {
         let page = parseInt(state.totalPages());
